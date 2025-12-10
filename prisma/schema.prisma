@@ -16,7 +16,7 @@ datasource db {
 model User {
   id                 String     @id @default(uuid())
   email              String     @unique
-  password           String?
+  password           String
   role               UserRole   @default(TRAVELER)
   needPasswordChange Boolean    @default(true)
   gender             Gender?
