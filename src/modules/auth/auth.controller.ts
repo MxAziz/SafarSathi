@@ -5,6 +5,16 @@ import { AuthService } from "./auth.service.js";
 import type { Request, Response } from "express";
 import httpStatus from 'http-status';
 
+const getMe = catchAsync(async (req: Request, res: Response) => {
+  const userSession = req.cookies;
+  const result = await AuthService.getMe(userSession);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "User retrieve successfully!",
+    data: result,
+  });
+});
 
 const login = catchAsync(async (req: Request, res: Response) => {
   const payload = req.body;
@@ -47,6 +57,7 @@ const refreshToken = catchAsync(async (req: Request, res: Response) => {
 });
 
 export const AuthController = {
+  getMe,
   login,
   refreshToken
 };

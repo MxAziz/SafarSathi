@@ -8,6 +8,29 @@ import config from "../../config/index.js";
 import type { JwtPayload } from "jsonwebtoken";
 
 
+const getMe = async (session: any) => {
+  const accessToken = session.accessToken;
+  const decodedData = verifyToken(
+    accessToken,
+    config.JWT.ACCESS_TOKEN_SECRET
+  ) as JwtPayload;
+
+  const userData = await prisma.user.findUniqueOrThrow({
+    where: {
+      email: decodedData.email,
+      status: UserStatus.ACTIVE,
+    },
+  });
+
+  const { id, email, role, status } = userData;
+  return {
+    id,
+    email,
+    role,
+    status,
+  };
+};
+
 const login = async (payload: { email: string; password: string }) => {
   const user = await prisma.user.findUnique({
     where: {
@@ -96,6 +119,7 @@ const refreshToken = async (token: string)=> {
 
 
 export const AuthService = {
+  getMe,
   login,
   refreshToken,
 }
