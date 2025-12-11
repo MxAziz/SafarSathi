@@ -34,8 +34,8 @@ export async function seedAdmin() {
         data: {
           name: "Muhammad Aziz",
           email: config.ADMIN_EMAIL,
-          contactNumber: "01623568974",
-          address: "Dhaka, Bangladesh",
+          contactNumber: "01518939563",
+          address: "Rajshahi, Bangladesh",
           profileImage:
             "https://img.freepik.com/free-photo/closeup-scarlet-macaw-from-side-view-scarlet-macaw-closeup-head_488145-3540.jpg?semt=ais_hybrid&w=740&q=80",
         },
