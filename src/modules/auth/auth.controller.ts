@@ -1,3 +1,4 @@
+import type { IJwtPayload } from "../../types/common.js";
 import catchAsync from "../../utils/catchAsync.js";
 import sendResponse from "../../utils/sendResponse.js";
 import { setAuthCookie } from "../../utils/setCookie.js";
@@ -56,8 +57,22 @@ const refreshToken = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const changePassword = catchAsync(
+  async (req: Request & { user?: IJwtPayload }, res: Response) => {
+    const user = req.user as IJwtPayload;
+    const result = await AuthService.changePassword(user, req.body);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "Password Changed successfully",
+      data: result,
+    });
+  }
+);
+
 export const AuthController = {
   getMe,
   login,
-  refreshToken
+  refreshToken,
+  changePassword,
 };

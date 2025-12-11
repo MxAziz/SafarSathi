@@ -6,6 +6,7 @@ import { createUserTokens } from "../../utils/userToken.js";
 import { generateToken, verifyToken } from "../../utils/jwt.js";
 import config from "../../config/index.js";
 import type { JwtPayload } from "jsonwebtoken";
+import type { IJwtPayload } from "../../types/common.js";
 
 
 const getMe = async (session: any) => {
@@ -117,9 +118,49 @@ const refreshToken = async (token: string)=> {
   };
 }
 
+const changePassword = async (
+  user: IJwtPayload,
+  payload: { oldPassword: string; newPassword: string }
+) => {
+  const userData = await prisma.user.findUniqueOrThrow({
+    where: {
+      email: user.email,
+      status: UserStatus.ACTIVE,
+    },
+  });
+
+  const isCorrectPassword: boolean = await bcrypt.compare(
+    payload.oldPassword,
+    userData.password as string
+  );
+
+  if (!isCorrectPassword) {
+    throw new Error("Password incorrect!");
+  }
+
+  const hashedPassword: string = await bcrypt.hash(
+    payload.newPassword,
+    Number(config.BCRYPTSALTROUND)
+  );
+
+  await prisma.user.update({
+    where: {
+      email: userData.email,
+    },
+    data: {
+      password: hashedPassword,
+      // needPasswordChange: false
+    },
+  });
+
+  return {
+    message: "Password changed successfully!",
+  };
+};
 
 export const AuthService = {
   getMe,
   login,
   refreshToken,
+  changePassword,
 }
