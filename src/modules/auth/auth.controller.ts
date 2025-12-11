@@ -3,6 +3,7 @@ import sendResponse from "../../utils/sendResponse.js";
 import { setAuthCookie } from "../../utils/setCookie.js";
 import { AuthService } from "./auth.service.js";
 import type { Request, Response } from "express";
+import httpStatus from 'http-status';
 
 
 const login = catchAsync(async (req: Request, res: Response) => {
@@ -26,6 +27,26 @@ const login = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const refreshToken = catchAsync(async (req: Request, res: Response) => {
+  const { refreshToken } = req.cookies;
+
+  const result = await AuthService.refreshToken(refreshToken);
+  const userToken = {
+    accessToken: result.accessToken,
+  };
+
+  setAuthCookie(res, userToken);
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Access token generated successfully!",
+    data: {
+      message: "Access token generated successfully!",
+    },
+  });
+});
+
 export const AuthController = {
   login,
+  refreshToken
 };
