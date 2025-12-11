@@ -12,4 +12,6 @@ userRoute.post(
   UserController.register
 );
 
+userRoute.get("/", UserController.getAllTravelers);
+
 export default userRoute;
