@@ -6,6 +6,8 @@ import { UserRole } from "../../../generated/prisma/client.js";
 import { calculatePagination, type TOptions } from "../../utils/paginationHelpers.js";
 import type { Gender, Prisma } from "../../../generated/prisma/browser.js";
 import type { IJwtPayload } from "../../types/common.js";
+import AppError from "../../errorHelpers/AppError.js";
+import httpStatus from "http-status";
 
 
 
@@ -169,9 +171,83 @@ const getMyProfile = async (user: IJwtPayload) => {
   return profileData;
 };
 
+const updateMyProfile = async (
+  user: IJwtPayload,
+  payload: Partial<ITraveler> & { gender?: string }
+) => {
+  const email = user?.email;
+  const role = user?.role;
+
+  if (!email) {
+    throw new AppError(httpStatus.UNAUTHORIZED, "Unauthorized user");
+  }
+
+  // Email should never be updated via this route
+  if (payload.email) {
+    delete payload.email;
+  }
+
+  let updatedProfile;
+
+  // CASE 1: If user is TRAVELER
+  if (role === UserRole.TRAVELER) {
+    const { gender, ...travelerData } = payload;
+
+    updatedProfile = await prisma.$transaction(async (tx) => {
+      const traveler = await tx.traveler.findUnique({ where: { email } });
+
+      if (!traveler) {
+        throw new AppError(404, "Traveler profile not found");
+      }
+
+      // ৩. Traveler
+      const result = await tx.traveler.update({
+        where: { email },
+        data: {
+          ...travelerData,
+          updatedAt: new Date(),
+        },
+      });
+
+      if (gender) {
+        await tx.user.update({
+          where: { email },
+          data: { gender: gender as Gender },
+        });
+      }
+
+      return result;
+    });
+
+    return updatedProfile;
+  }
+
+  // CASE 2: If user is ADMIN
+  if (role === UserRole.ADMIN) {
+    const admin = await prisma.admin.findUnique({ where: { email } });
+
+    if (!admin) {
+      throw new AppError(httpStatus.NOT_FOUND, "Admin profile not found");
+    }
+
+    updatedProfile = await prisma.admin.update({
+      where: { email },
+      data: {
+        ...payload,
+        updatedAt: new Date(),
+      },
+    });
+
+    return updatedProfile;
+  }
+
+  return updatedProfile;
+};
+
 export const UserService = {
   register,
   getAllTravelers,
   getTravelerById,
   getMyProfile,
+  updateMyProfile,
 };
