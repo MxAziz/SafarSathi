@@ -33,6 +33,12 @@ userRoute.get(
   UserController.getMyProfile
 );
 
+userRoute.get(
+  "/matches",
+  checkAuth(UserRole.TRAVELER),
+  UserController.getTravelBuddyMatches
+);
+
 userRoute.delete(
   "/delete-traveler/:travelerId",
   checkAuth(UserRole.ADMIN),

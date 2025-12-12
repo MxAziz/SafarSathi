@@ -96,11 +96,26 @@ const deleteUser = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getTravelBuddyMatches = catchAsync(
+  async (req: Request & { user?: IJwtPayload }, res: Response) => {
+    const user = req.user as IJwtPayload;
+    const result = await UserService.getRecommendedTravelers(user);
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Recommended travelers retrieved successfully",
+      data: result,
+    });
+  }
+);
+
 export const UserController = {
     register,
     getAllTravelers,
     getTravelerById,
     getMyProfile,
     updateMyProfile,
-    deleteUser,
+  deleteUser,
+    getTravelBuddyMatches
 }

@@ -268,10 +268,81 @@ const deleteUser = async (travelerId: string) => {
   return result;
 };
 
+const getRecommendedTravelers = async (user: IJwtPayload) => {
+  const currentUser = await prisma.traveler.findUnique({
+    where: { email: user.email },
+    select: { id: true, travelInterests: true },
+  });
+
+  if (!currentUser) {
+    throw new AppError(404, "User profile not found");
+  }
+
+  if (
+    !currentUser.travelInterests ||
+    currentUser.travelInterests.length === 0
+  ) {
+    return await prisma.traveler.findMany({
+      where: {
+        id: { not: currentUser.id },
+      },
+      take: 10,
+      select: {
+        id: true,
+        name: true,
+        email: true,
+        contactNumber: true,
+        address: true,
+        profileImage: true,
+        bio: true,
+        travelInterests: true,
+        visitedCountries: true,
+        isVerifiedTraveler: true,
+        subscriptionEndDate: true,
+        averageRating: true,
+        currentLocation: true,
+        createdAt: true,
+      },
+    });
+  }
+
+  const matchedTravelers = await prisma.traveler.findMany({
+    where: {
+      id: { not: currentUser.id },
+      travelInterests: {
+        hasSome: currentUser.travelInterests,
+      },
+    },
+    take: 20,
+    orderBy: {
+      averageRating: "desc",
+    },
+    select: {
+      id: true,
+      name: true,
+      email: true,
+      contactNumber: true,
+      address: true,
+      profileImage: true,
+      bio: true,
+      travelInterests: true,
+      visitedCountries: true,
+      isVerifiedTraveler: true,
+      subscriptionEndDate: true,
+      averageRating: true,
+      currentLocation: true,
+      createdAt: true,
+    },
+  });
+
+  return matchedTravelers;
+};
+
 export const UserService = {
   register,
   getAllTravelers,
   getTravelerById,
+  getRecommendedTravelers,
   getMyProfile,
   updateMyProfile,
   deleteUser,
