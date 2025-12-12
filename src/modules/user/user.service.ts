@@ -173,4 +173,5 @@ export const UserService = {
   register,
   getAllTravelers,
   getTravelerById,
+  getMyProfile,
 };

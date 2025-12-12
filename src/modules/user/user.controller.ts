@@ -1,4 +1,5 @@
 import AppError from "../../errorHelpers/AppError.js";
+import type { IJwtPayload } from "../../types/common.js";
 import catchAsync from "../../utils/catchAsync.js";
 import { pick } from "../../utils/pick.js";
 import sendResponse from "../../utils/sendResponse.js";
@@ -51,8 +52,22 @@ const getTravelerById = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getMyProfile = catchAsync(
+  async (req: Request & { user?: IJwtPayload }, res: Response) => {
+    const user = req.user as IJwtPayload;
+    const result = await UserService.getMyProfile(user);
+    sendResponse(res, {
+      statusCode: httpStatus.OK,
+      success: true,
+      message: "My profile data fetched!",
+      data: result,
+    });
+  }
+);
+
 export const UserController = {
     register,
     getAllTravelers,
     getTravelerById,
+    getMyProfile,
 }
