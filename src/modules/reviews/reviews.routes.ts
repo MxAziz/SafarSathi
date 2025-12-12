@@ -1,0 +1,47 @@
+import express from "express";
+import { checkAuth } from "../../middlewares/checkAuth.js";
+import { ReviewController } from "./reviews.controller.js";
+import { zodValidateRequest } from "../../middlewares/zodValidateRequest.js";
+import {
+  createReviewZodSchema,
+  updateReviewZodSchema,
+} from "./reviews.zod.validation.js";
+import { UserRole } from "../../../generated/prisma/enums.js";
+const reviewRoute = express.Router();
+
+reviewRoute.post(
+  "/",
+  checkAuth(UserRole.TRAVELER),
+  zodValidateRequest(createReviewZodSchema),
+  ReviewController.addReview
+);
+
+reviewRoute.get(
+  "/my-reviews",
+  checkAuth(UserRole.TRAVELER),
+  ReviewController.getMyReviews
+);
+
+// Admin can see all reviews (Optional: Remove checkAuth if public)
+reviewRoute.get(
+  "/",
+  // checkAuth(UserRole.ADMIN), // Uncomment if only admin should see ALL reviews list
+  ReviewController.getAllReviews
+);
+
+reviewRoute.get("/:planId", ReviewController.getReviewsForPlan);
+
+reviewRoute.patch(
+  "/:reviewId",
+  checkAuth(UserRole.TRAVELER), // Only traveler can edit their own
+  zodValidateRequest(updateReviewZodSchema),
+  ReviewController.updateReview
+);
+
+reviewRoute.delete(
+  "/:reviewId",
+  checkAuth(UserRole.ADMIN, UserRole.TRAVELER), // Admin OR Traveler can delete
+  ReviewController.deleteReview
+);
+
+export default reviewRoute;
