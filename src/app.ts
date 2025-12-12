@@ -1,4 +1,3 @@
-
 import express, { type Request, type Response } from 'express';
 import config from './config/index.js';
 import cookieParser from "cookie-parser";
