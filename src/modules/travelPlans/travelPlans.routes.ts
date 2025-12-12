@@ -16,4 +16,11 @@ travelPlanRoute.post(
   TravelController.createTravelPlan
 );
 
+//get my travel plans
+travelPlanRoute.get(
+  "/my-plans",
+  checkAuth(UserRole.TRAVELER),
+  TravelController.getMyTravelPlans
+);
+
 export default travelPlanRoute;

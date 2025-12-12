@@ -1,6 +1,10 @@
+import type { Prisma } from "../../../generated/prisma/client.js";
 import AppError from "../../errorHelpers/AppError.js";
 import { prisma } from "../../lib/prisma.js";
+import type { IJwtPayload } from "../../types/common.js";
+import { calculatePagination, type TOptions } from "../../utils/paginationHelpers.js";
 import type { ITravelPlan } from "./travelPlans.interface.js";
+import httpStatus from 'http-status';
 
 
 const createTravelPlan = async (plan: ITravelPlan, travelerEmail: string) => {
@@ -41,7 +45,47 @@ const createTravelPlan = async (plan: ITravelPlan, travelerEmail: string) => {
   return result;
 };
 
+const getMyTravelPlans = async (user: IJwtPayload, options: TOptions) => {
+  const { page, limit, skip, sortBy, sortOrder } = calculatePagination(options);
+
+  const traveler = await prisma.traveler.findUnique({
+    where: {
+      email: user.email,
+    },
+  });
+
+  if (!traveler) {
+    throw new AppError(httpStatus.NOT_FOUND, "Traveler profile not found");
+  }
+
+  const whereConditions: Prisma.TravelPlanWhereInput = {
+    travelerId: traveler.id, // Relation Field
+  };
+
+  const result = await prisma.travelPlan.findMany({
+    where: whereConditions,
+    skip,
+    take: limit,
+    orderBy: {
+      [sortBy]: sortOrder,
+    },
+  });
+
+  const total = await prisma.travelPlan.count({ where: whereConditions });
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit),
+    },
+    data: result,
+  };
+};
+
 
 export const TravelService = {
-    createTravelPlan,
+  createTravelPlan,
+  getMyTravelPlans,
 }
