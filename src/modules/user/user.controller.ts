@@ -71,7 +71,7 @@ const updateMyProfile = catchAsync(
     // const profileImage = req.file?.path;
     const payload = {
       ...req.body,
-      // profileImage: req.file?.path,
+      // profileImage: req.file?.path,  //me
     };
 
     const result = await UserService.updateMyProfile(user, payload);

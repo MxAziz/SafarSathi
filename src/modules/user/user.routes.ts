@@ -19,6 +19,7 @@ userRoute.post(
 userRoute.patch(
   "/update-my-profile",
   checkAuth(UserRole.TRAVELER, UserRole.ADMIN),
+  //me
   // multerUpload.single("file"),
   zodValidateRequest(updateTravelerProfileZodSchema),
   UserController.updateMyProfile
