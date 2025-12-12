@@ -1,9 +1,3 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client"
   output   = "../generated/prisma"
@@ -25,9 +19,8 @@ model User {
   isVerified         Boolean    @default(false)
   createdAt          DateTime   @default(now())
   updatedAt          DateTime   @updatedAt
-
-  admin    Admin?
-  traveler Traveler?
+  admin              Admin?
+  traveler           Traveler?
 
   @@map("users")
 }
@@ -41,8 +34,7 @@ model Admin {
   profileImage  String?
   createdAt     DateTime @default(now())
   updatedAt     DateTime @updatedAt
-
-  user User @relation(fields: [email], references: [email])
+  user          User     @relation(fields: [email], references: [email])
 
   @@map("admins")
 }
@@ -63,15 +55,14 @@ model Traveler {
   subscriptionEndDate DateTime?
   createdAt           DateTime      @default(now())
   updatedAt           DateTime      @updatedAt
-  user                User          @relation(fields: [email], references: [email])
-  travelPlans         TravelPlan[]
-  reviews             Review[]
   payments            Payment[]
+  reviews             Review[]
+  travelPlans         TravelPlan[]
+  user                User          @relation(fields: [email], references: [email])
   tripRequests        TripRequest[]
 
   @@map("travelers")
 }
-
 
 model TravelPlan {
   id           String        @id @default(uuid())
@@ -87,8 +78,8 @@ model TravelPlan {
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
   travelerId   String
-  traveler     Traveler      @relation(fields: [travelerId], references: [id])
   reviews      Review[]
+  traveler     Traveler      @relation(fields: [travelerId], references: [id])
   tripRequests TripRequest[]
 
   @@map("travelPlans")
@@ -99,22 +90,22 @@ model Review {
   rating       Int
   comment      String?
   travelerId   String
-  traveler     Traveler   @relation(fields: [travelerId], references: [id])
   travelPlanId String
-  travelPlan   TravelPlan @relation(fields: [travelPlanId], references: [id])
   createdAt    DateTime   @default(now())
   updatedAt    DateTime   @updatedAt
+  travelPlan   TravelPlan @relation(fields: [travelPlanId], references: [id])
+  traveler     Traveler   @relation(fields: [travelerId], references: [id])
 }
 
 model TripRequest {
   id           String        @id @default(uuid())
   travelPlanId String
-  travelPlan   TravelPlan    @relation(fields: [travelPlanId], references: [id])
   travelerId   String
-  traveler     Traveler      @relation(fields: [travelerId], references: [id])
   status       RequestStatus @default(PENDING)
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
+  travelPlan   TravelPlan    @relation(fields: [travelPlanId], references: [id])
+  traveler     Traveler      @relation(fields: [travelerId], references: [id])
 
   @@unique([travelPlanId, travelerId])
   @@map("tripRequests")
@@ -128,12 +119,10 @@ model Payment {
   transactionId      String        @unique
   paymentGatewayData Json?
   travelerId         String
-  traveler           Traveler      @relation(fields: [travelerId], references: [id])
   createdAt          DateTime      @default(now())
   updatedAt          DateTime      @updatedAt
+  traveler           Traveler      @relation(fields: [travelerId], references: [id])
 }
-
-
 
 enum UserRole {
   ADMIN
