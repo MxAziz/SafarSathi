@@ -5,6 +5,7 @@ import travelPlanRoute from "../modules/travelPlans/travelPlans.routes.js";
 import reviewRoute from "../modules/reviews/reviews.routes.js";
 import tripRequestRoute from "../modules/tripRequest/tripRequest.routes.js";
 import statsRoute from "../modules/stats/stats.routes.js";
+import activityRoute from "../modules/activity/activity.routes.js";
 
 const routes = Router();
 
@@ -14,5 +15,6 @@ routes.use("/travel-plans", travelPlanRoute);
 routes.use("/reviews", reviewRoute);
 routes.use("/trip-requests", tripRequestRoute);
 routes.use("/stats", statsRoute);
+routes.use("/activities", activityRoute);
 
 export default routes;
