@@ -23,4 +23,10 @@ travelPlanRoute.get(
   TravelController.getMyTravelPlans
 );
 
+travelPlanRoute.get(
+  "/:id",
+  // checkAuth(UserRole.TRAVELER, UserRole.ADMIN),
+  TravelController.getTravelPlanById
+);
+
 export default travelPlanRoute;

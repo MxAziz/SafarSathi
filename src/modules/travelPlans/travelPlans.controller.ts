@@ -43,7 +43,21 @@ const getMyTravelPlans = catchAsync(
   }
 );
 
+
+const getTravelPlanById = catchAsync(async (req: Request, res: Response) => {
+  const travelPlanId = req.params.id;
+  const result = await TravelService.getTravelPlanById(travelPlanId as string);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Travel Plan retrieved successfully",
+    data: result,
+  });
+});
+
 export const TravelController = {
   createTravelPlan,
   getMyTravelPlans,
+  getTravelPlanById,
 };

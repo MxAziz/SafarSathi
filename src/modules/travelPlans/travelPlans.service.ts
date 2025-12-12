@@ -85,7 +85,26 @@ const getMyTravelPlans = async (user: IJwtPayload, options: TOptions) => {
 };
 
 
+
+const getTravelPlanById = async (id: string) => {
+  const result = await prisma.travelPlan.findUniqueOrThrow({
+    where: { id },
+    include: {
+      traveler: {
+        select: {
+          id: true,
+          name: true,
+          email: true,
+          averageRating: true,
+        },
+      },
+    },
+  });
+  return result;
+};
+
 export const TravelService = {
   createTravelPlan,
   getMyTravelPlans,
+  getTravelPlanById,
 }
