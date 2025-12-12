@@ -2,7 +2,7 @@ import bcrypt from "bcryptjs";
 import type { ITraveler } from "./user.interface.js";
 import config from "../../config/index.js";
 import { prisma } from "../../lib/prisma.js";
-import { UserRole } from "../../../generated/prisma/client.js";
+import { UserRole, UserStatus } from "../../../generated/prisma/client.js";
 import { calculatePagination, type TOptions } from "../../utils/paginationHelpers.js";
 import type { Gender, Prisma } from "../../../generated/prisma/browser.js";
 import type { IJwtPayload } from "../../types/common.js";
@@ -244,10 +244,35 @@ const updateMyProfile = async (
   return updatedProfile;
 };
 
+const deleteUser = async (travelerId: string) => {
+  // 1. Find the traveler to get the email
+  const traveler = await prisma.traveler.findUnique({
+    where: { id: travelerId },
+  });
+
+  if (!traveler) {
+    throw new AppError(httpStatus.NOT_FOUND, "Traveler not found");
+  }
+
+  // 2. Update the User table using the email
+  const result = await prisma.user.update({
+    where: {
+      email: traveler.email,
+    },
+    data: {
+      isDeleted: true,
+      status: UserStatus.INACTIVE,
+    },
+  });
+
+  return result;
+};
+
 export const UserService = {
   register,
   getAllTravelers,
   getTravelerById,
   getMyProfile,
   updateMyProfile,
+  deleteUser,
 };

@@ -33,6 +33,12 @@ userRoute.get(
   UserController.getMyProfile
 );
 
+userRoute.delete(
+  "/delete-traveler/:travelerId",
+  checkAuth(UserRole.ADMIN),
+  UserController.deleteUser
+);
+
 userRoute.get("/:id", UserController.getTravelerById);
 
 export default userRoute;

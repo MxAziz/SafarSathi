@@ -84,10 +84,23 @@ const updateMyProfile = catchAsync(
   }
 );
 
+const deleteUser = catchAsync(async (req: Request, res: Response) => {
+  const { travelerId } = req.params;
+  await UserService.deleteUser(travelerId as string);
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "User deleted successfully",
+    data: null,
+  });
+});
+
 export const UserController = {
     register,
     getAllTravelers,
     getTravelerById,
     getMyProfile,
     updateMyProfile,
+    deleteUser,
 }
