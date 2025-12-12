@@ -5,6 +5,7 @@ import { prisma } from "../../lib/prisma.js";
 import { UserRole } from "../../../generated/prisma/client.js";
 import { calculatePagination, type TOptions } from "../../utils/paginationHelpers.js";
 import type { Gender, Prisma } from "../../../generated/prisma/browser.js";
+import type { IJwtPayload } from "../../types/common.js";
 
 
 
@@ -111,6 +112,61 @@ const getTravelerById = async (id: string) => {
     // include: { reviews: true }
   });
   return result;
+};
+
+const getMyProfile = async (user: IJwtPayload) => {
+  if (!user?.email || !user?.role) {
+    throw new Error("Invalid user token");
+  }
+
+  let profileData;
+
+  switch (user.role) {
+    case UserRole.ADMIN:
+      profileData = await prisma.admin.findUnique({
+        where: { email: user.email },
+        include: {
+          user: {
+            select: {
+              id: true,
+              email: true,
+              needPasswordChange: true,
+              role: true,
+              status: true,
+              gender: true,
+            },
+          },
+        },
+      });
+      break;
+
+    case UserRole.TRAVELER:
+      profileData = await prisma.traveler.findUnique({
+        where: { email: user.email },
+        include: {
+          user: {
+            select: {
+              id: true,
+              email: true,
+              needPasswordChange: true,
+              role: true,
+              status: true,
+              gender: true,
+            },
+          },
+        },
+      });
+      break;
+
+    default:
+      throw new Error("Unauthorized user role");
+  }
+
+  if (!profileData) {
+    throw new Error("Profile not found");
+  }
+
+  return profileData;
 };
 
 export const UserService = {

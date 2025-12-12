@@ -49,10 +49,6 @@ export const checkAuth =
         throw new AppError(404, "Your account is deleted");
       }
 
-      // if (user.isVerified === false) {
-      //   throw new AppError(404, "Your account is not verified");
-      // }
-
       if (roles.length > 0 && !roles.includes(verify_Token.role)) {
         throw new AppError(403, "You are not authorized to access this route");
       }
