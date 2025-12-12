@@ -12,7 +12,6 @@ const createSubscriptionSession = async (
 ) => {
   const { amount, subscriptionType } = payload;
 
-  // Traveler valid kina check kora uchit
   const traveler = await prisma.traveler.findUniqueOrThrow({
     where: { email: travelerData.email },
   });

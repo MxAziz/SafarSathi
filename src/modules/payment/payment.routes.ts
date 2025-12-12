@@ -13,13 +13,4 @@ paymentRoute.post(
   PaymentController.createSubscription
 );
 
-// Webhook Route
-// নোট: Webhook রাউটটি সাধারণত app.ts এ আলাদাভাবে হ্যান্ডল করা ভালো,
-// তবে এখানে রাখলে app.ts এ কনফিগারেশন চেঞ্জ করতে হবে।
-// paymentRoute.post(
-//   "/webhook",
-//   express.raw({ type: "application/json" }), // এই রাউটের জন্য Raw parsing
-//   PaymentController.stripeWebhook
-// );
-
 export default paymentRoute;
