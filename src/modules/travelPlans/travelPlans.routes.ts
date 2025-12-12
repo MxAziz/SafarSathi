@@ -26,6 +26,12 @@ travelPlanRoute.get(
 );
 
 travelPlanRoute.get(
+  "/matches",
+  checkAuth(UserRole.TRAVELER),
+  TravelController.getTravelPlanMatches
+);
+
+travelPlanRoute.get(
   "/:id",
   // checkAuth(UserRole.TRAVELER, UserRole.ADMIN),
   TravelController.getTravelPlanById
