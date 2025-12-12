@@ -5,12 +5,20 @@ import cookieParser from "cookie-parser";
 import globalErrorHandler from './middlewares/globalErrorHandler.js';
 import notFound from './middlewares/notFound.js';
 import routes from './routes/routes.js';
+import { PaymentController } from './modules/payment/payment.controller.js';
 
 const app = express();
+
+app.post(
+  "/webhook",
+  express.raw({ type: "application/json" }),
+  PaymentController.stripeWebhook
+);
 
 // middleware
 app.use(express.json());
 app.use(cookieParser());
+app.use(express.urlencoded({ extended: true }));
 
 // routes
 app.use("/api/v1", routes);
