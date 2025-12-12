@@ -16,6 +16,8 @@ travelPlanRoute.post(
   TravelController.createTravelPlan
 );
 
+travelPlanRoute.get("/", TravelController.getAllTravelPlans);
+
 //get my travel plans
 travelPlanRoute.get(
   "/my-plans",

@@ -43,6 +43,26 @@ const getMyTravelPlans = catchAsync(
   }
 );
 
+const getAllTravelPlans = catchAsync(async (req: Request, res: Response) => {
+  const filters = pick(req.query, [
+    "searchTerm",
+    "destination",
+    "travelType",
+    "startDate",
+    "endDate",
+  ]);
+  const options = pick(req.query, ["page", "limit", "sortBy", "sortOrder"]);
+
+  const result = await TravelService.getAllTravelPlans(filters, options);
+
+  sendResponse(res, {
+    statusCode: 200,
+    success: true,
+    message: "Travel Plans retrieved successfully",
+    meta: result.meta,
+    data: result.data,
+  });
+});
 
 const getTravelPlanById = catchAsync(async (req: Request, res: Response) => {
   const travelPlanId = req.params.id;
@@ -60,4 +80,5 @@ export const TravelController = {
   createTravelPlan,
   getMyTravelPlans,
   getTravelPlanById,
+  getAllTravelPlans,
 };

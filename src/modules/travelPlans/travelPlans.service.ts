@@ -84,7 +84,85 @@ const getMyTravelPlans = async (user: IJwtPayload, options: TOptions) => {
   };
 };
 
+const getAllTravelPlans = async (filters: any, options: TOptions) => {
+  const { page, limit, skip, sortBy, sortOrder } = calculatePagination(options);
+  const { searchTerm, startDate, endDate, ...filterData } = filters;
 
+  const andConditions: Prisma.TravelPlanWhereInput[] = [];
+
+  if (searchTerm) {
+    andConditions.push({
+      OR: [
+        { destination: { contains: searchTerm, mode: "insensitive" } },
+        { title: { contains: searchTerm, mode: "insensitive" } },
+      ],
+    });
+  }
+
+  // 2. Exact Match Filters (Like travelType, budgetRange)
+  if (Object.keys(filterData).length > 0) {
+    andConditions.push({
+      AND: Object.keys(filterData).map((key) => ({
+        [key]: {
+          equals: (filterData as any)[key],
+        },
+      })),
+    });
+  }
+
+  // 3. Date Range Search logic (NEW ADDITION)
+
+  if (startDate && endDate) {
+    andConditions.push({
+      AND: [
+        {
+          startDate: {
+            lte: new Date(startDate),
+          },
+        },
+        {
+          endDate: {
+            gte: new Date(endDate),
+          },
+        },
+      ],
+    });
+  }
+
+  const whereConditions: Prisma.TravelPlanWhereInput =
+    andConditions.length > 0 ? { AND: andConditions } : {};
+
+  const result = await prisma.travelPlan.findMany({
+    where: whereConditions,
+    skip,
+    take: limit,
+    orderBy: {
+      [sortBy]: sortOrder,
+    },
+    include: {
+      traveler: {
+        select: {
+          name: true,
+          email: true,
+          profileImage: true,
+          averageRating: true,
+        },
+      },
+    },
+  });
+
+  const total = await prisma.travelPlan.count({ where: whereConditions });
+
+  return {
+    meta: {
+      page,
+      limit,
+      total,
+      totalPages: Math.ceil(total / limit),
+    },
+    data: result,
+  };
+};
 
 const getTravelPlanById = async (id: string) => {
   const result = await prisma.travelPlan.findUniqueOrThrow({
@@ -107,4 +185,5 @@ export const TravelService = {
   createTravelPlan,
   getMyTravelPlans,
   getTravelPlanById,
+  getAllTravelPlans,
 }
