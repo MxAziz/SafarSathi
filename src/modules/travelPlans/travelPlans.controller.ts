@@ -76,9 +76,53 @@ const getTravelPlanById = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const updateTravelPlan = catchAsync(
+  async (req: Request & { user?: IJwtPayload }, res: Response) => {
+    const travelPlanId = req.params.id;
+    const payload = {
+      ...req.body,
+      imageUrl: req.file?.path,
+    };
+    const travelerData = req.user as IJwtPayload;
+
+    const result = await TravelService.updateTravelPlan(
+      travelPlanId as string,
+      payload,
+      travelerData
+    );
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Travel Plan updated successfully",
+      data: result,
+    });
+  }
+);
+
+const deleteTravelPlan = catchAsync(
+  async (req: Request & { user?: IJwtPayload }, res: Response) => {
+    const travelPlanId = req.params.id;
+    const travelerData = req.user as IJwtPayload;
+    const result = await TravelService.deleteTravelPlan(
+      travelPlanId as string,
+      travelerData
+    );
+
+    sendResponse(res, {
+      statusCode: 200,
+      success: true,
+      message: "Travel Plan deleted successfully",
+      data: result,
+    });
+  }
+);
+
 export const TravelController = {
   createTravelPlan,
   getMyTravelPlans,
   getTravelPlanById,
   getAllTravelPlans,
+  updateTravelPlan,
+  deleteTravelPlan,
 };
