@@ -14,4 +14,6 @@ userRoute.post(
 
 userRoute.get("/", UserController.getAllTravelers);
 
+userRoute.get("/:id", UserController.getTravelerById);
+
 export default userRoute;

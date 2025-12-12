@@ -102,9 +102,19 @@ const getAllTravelers = async (filters: any, options: TOptions) => {
   };
 };
 
+const getTravelerById = async (id: string) => {
+  const result = await prisma.traveler.findUnique({
+    where: {
+      id: id,
+    },
 
+    // include: { reviews: true }
+  });
+  return result;
+};
 
 export const UserService = {
   register,
   getAllTravelers,
+  getTravelerById,
 };

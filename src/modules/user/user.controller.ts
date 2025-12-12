@@ -1,8 +1,10 @@
+import AppError from "../../errorHelpers/AppError.js";
 import catchAsync from "../../utils/catchAsync.js";
 import { pick } from "../../utils/pick.js";
 import sendResponse from "../../utils/sendResponse.js";
 import { UserService } from "./user.service.js";
 import type { Request, Response } from "express";
+import httpStatus from 'http-status';
 
 
 const register = catchAsync(async (req: Request, res: Response) => {
@@ -32,7 +34,25 @@ const getAllTravelers = catchAsync(async (req: Request, res: Response) => {
   });
 });
 
+const getTravelerById = catchAsync(async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  const result = await UserService.getTravelerById(id as string);
+
+  if (!result) {
+    throw new AppError(httpStatus.NOT_FOUND, "Traveler not found!");
+  }
+
+  sendResponse(res, {
+    statusCode: httpStatus.OK,
+    success: true,
+    message: "Traveler retrieved successfully",
+    data: result,
+  });
+});
+
 export const UserController = {
     register,
     getAllTravelers,
+    getTravelerById,
 }
