@@ -76,7 +76,7 @@ Make sure you have a postgressql Database Url connection string set in your `.en
 
 ```
 DATABASE_URL="postgresql://user:password@localhost:5432/travel_db"
-PORT=3000
+PORT=5000
 NODE_ENV="development"
 JWT_SECRET="your_jwt_secret"
 STRIPE_SECRET_KEY="your_stripe_secret_key"
