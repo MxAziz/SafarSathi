@@ -1,5 +1,6 @@
 import express, { type Request, type Response } from 'express';
 import config from './config/index.js';
+import cors from "cors";
 import cookieParser from "cookie-parser";
 import globalErrorHandler from './middlewares/globalErrorHandler.js';
 import notFound from './middlewares/notFound.js';
@@ -18,6 +19,12 @@ app.post(
 app.use(express.json());
 app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
+app.use(
+  cors({
+    origin: ["https://safarsathi-mu.vercel.app","http://localhost:3000"],
+    credentials: true,
+  })
+);
 
 // routes
 app.use("/api/v1", routes);
