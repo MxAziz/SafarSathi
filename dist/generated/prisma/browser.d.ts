@@ -8,8 +8,33 @@ export * from './enums.js';
  */
 export type User = Prisma.UserModel;
 /**
- * Model Post
+ * Model Admin
  *
  */
-export type Post = Prisma.PostModel;
+export type Admin = Prisma.AdminModel;
+/**
+ * Model Traveler
+ *
+ */
+export type Traveler = Prisma.TravelerModel;
+/**
+ * Model TravelPlan
+ *
+ */
+export type TravelPlan = Prisma.TravelPlanModel;
+/**
+ * Model Review
+ *
+ */
+export type Review = Prisma.ReviewModel;
+/**
+ * Model TripRequest
+ *
+ */
+export type TripRequest = Prisma.TripRequestModel;
+/**
+ * Model Payment
+ *
+ */
+export type Payment = Prisma.PaymentModel;
 //# sourceMappingURL=browser.d.ts.map

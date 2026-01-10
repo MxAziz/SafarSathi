@@ -27,7 +27,12 @@ export declare const JsonNull: import("@prisma/client-runtime-utils").JsonNullCl
 export declare const AnyNull: import("@prisma/client-runtime-utils").AnyNullClass;
 export declare const ModelName: {
     readonly User: "User";
-    readonly Post: "Post";
+    readonly Admin: "Admin";
+    readonly Traveler: "Traveler";
+    readonly TravelPlan: "TravelPlan";
+    readonly Review: "Review";
+    readonly TripRequest: "TripRequest";
+    readonly Payment: "Payment";
 };
 export type ModelName = (typeof ModelName)[keyof typeof ModelName];
 export declare const TransactionIsolationLevel: {
@@ -40,22 +45,103 @@ export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof
 export declare const UserScalarFieldEnum: {
     readonly id: "id";
     readonly email: "email";
-    readonly name: "name";
+    readonly password: "password";
+    readonly role: "role";
+    readonly needPasswordChange: "needPasswordChange";
+    readonly gender: "gender";
+    readonly status: "status";
+    readonly isDeleted: "isDeleted";
+    readonly isVerified: "isVerified";
+    readonly createdAt: "createdAt";
+    readonly updatedAt: "updatedAt";
 };
 export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof UserScalarFieldEnum];
-export declare const PostScalarFieldEnum: {
+export declare const AdminScalarFieldEnum: {
+    readonly id: "id";
+    readonly name: "name";
+    readonly email: "email";
+    readonly contactNumber: "contactNumber";
+    readonly address: "address";
+    readonly profileImage: "profileImage";
+    readonly createdAt: "createdAt";
+    readonly updatedAt: "updatedAt";
+};
+export type AdminScalarFieldEnum = (typeof AdminScalarFieldEnum)[keyof typeof AdminScalarFieldEnum];
+export declare const TravelerScalarFieldEnum: {
+    readonly id: "id";
+    readonly name: "name";
+    readonly email: "email";
+    readonly contactNumber: "contactNumber";
+    readonly address: "address";
+    readonly profileImage: "profileImage";
+    readonly bio: "bio";
+    readonly travelInterests: "travelInterests";
+    readonly visitedCountries: "visitedCountries";
+    readonly currentLocation: "currentLocation";
+    readonly averageRating: "averageRating";
+    readonly isVerifiedTraveler: "isVerifiedTraveler";
+    readonly subscriptionEndDate: "subscriptionEndDate";
+    readonly createdAt: "createdAt";
+    readonly updatedAt: "updatedAt";
+};
+export type TravelerScalarFieldEnum = (typeof TravelerScalarFieldEnum)[keyof typeof TravelerScalarFieldEnum];
+export declare const TravelPlanScalarFieldEnum: {
     readonly id: "id";
     readonly title: "title";
-    readonly content: "content";
-    readonly published: "published";
-    readonly authorId: "authorId";
+    readonly description: "description";
+    readonly destination: "destination";
+    readonly imageUrl: "imageUrl";
+    readonly startDate: "startDate";
+    readonly endDate: "endDate";
+    readonly budgetRange: "budgetRange";
+    readonly travelType: "travelType";
+    readonly visibility: "visibility";
+    readonly createdAt: "createdAt";
+    readonly updatedAt: "updatedAt";
+    readonly travelerId: "travelerId";
 };
-export type PostScalarFieldEnum = (typeof PostScalarFieldEnum)[keyof typeof PostScalarFieldEnum];
+export type TravelPlanScalarFieldEnum = (typeof TravelPlanScalarFieldEnum)[keyof typeof TravelPlanScalarFieldEnum];
+export declare const ReviewScalarFieldEnum: {
+    readonly id: "id";
+    readonly rating: "rating";
+    readonly comment: "comment";
+    readonly travelerId: "travelerId";
+    readonly travelPlanId: "travelPlanId";
+    readonly createdAt: "createdAt";
+    readonly updatedAt: "updatedAt";
+};
+export type ReviewScalarFieldEnum = (typeof ReviewScalarFieldEnum)[keyof typeof ReviewScalarFieldEnum];
+export declare const TripRequestScalarFieldEnum: {
+    readonly id: "id";
+    readonly travelPlanId: "travelPlanId";
+    readonly travelerId: "travelerId";
+    readonly status: "status";
+    readonly createdAt: "createdAt";
+    readonly updatedAt: "updatedAt";
+};
+export type TripRequestScalarFieldEnum = (typeof TripRequestScalarFieldEnum)[keyof typeof TripRequestScalarFieldEnum];
+export declare const PaymentScalarFieldEnum: {
+    readonly id: "id";
+    readonly amount: "amount";
+    readonly status: "status";
+    readonly subscription: "subscription";
+    readonly transactionId: "transactionId";
+    readonly paymentGatewayData: "paymentGatewayData";
+    readonly travelerId: "travelerId";
+    readonly createdAt: "createdAt";
+    readonly updatedAt: "updatedAt";
+};
+export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum];
 export declare const SortOrder: {
     readonly asc: "asc";
     readonly desc: "desc";
 };
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder];
+export declare const NullableJsonNullValueInput: {
+    readonly DbNull: "DbNull";
+    readonly JsonNull: "JsonNull";
+};
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput];
 export declare const QueryMode: {
     readonly default: "default";
     readonly insensitive: "insensitive";
@@ -66,4 +152,10 @@ export declare const NullsOrder: {
     readonly last: "last";
 };
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder];
+export declare const JsonNullValueFilter: {
+    readonly DbNull: "DbNull";
+    readonly JsonNull: "JsonNull";
+    readonly AnyNull: "AnyNull";
+};
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter];
 //# sourceMappingURL=prismaNamespaceBrowser.d.ts.map

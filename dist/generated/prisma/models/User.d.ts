@@ -1,4 +1,5 @@
 import type * as runtime from "@prisma/client/runtime/client";
+import type * as $Enums from "../enums.js";
 import type * as Prisma from "../internal/prismaNamespace.js";
 /**
  * Model User
@@ -7,53 +8,87 @@ import type * as Prisma from "../internal/prismaNamespace.js";
 export type UserModel = runtime.Types.Result.DefaultSelection<Prisma.$UserPayload>;
 export type AggregateUser = {
     _count: UserCountAggregateOutputType | null;
-    _avg: UserAvgAggregateOutputType | null;
-    _sum: UserSumAggregateOutputType | null;
     _min: UserMinAggregateOutputType | null;
     _max: UserMaxAggregateOutputType | null;
 };
-export type UserAvgAggregateOutputType = {
-    id: number | null;
-};
-export type UserSumAggregateOutputType = {
-    id: number | null;
-};
 export type UserMinAggregateOutputType = {
-    id: number | null;
+    id: string | null;
     email: string | null;
-    name: string | null;
+    password: string | null;
+    role: $Enums.UserRole | null;
+    needPasswordChange: boolean | null;
+    gender: $Enums.Gender | null;
+    status: $Enums.UserStatus | null;
+    isDeleted: boolean | null;
+    isVerified: boolean | null;
+    createdAt: Date | null;
+    updatedAt: Date | null;
 };
 export type UserMaxAggregateOutputType = {
-    id: number | null;
+    id: string | null;
     email: string | null;
-    name: string | null;
+    password: string | null;
+    role: $Enums.UserRole | null;
+    needPasswordChange: boolean | null;
+    gender: $Enums.Gender | null;
+    status: $Enums.UserStatus | null;
+    isDeleted: boolean | null;
+    isVerified: boolean | null;
+    createdAt: Date | null;
+    updatedAt: Date | null;
 };
 export type UserCountAggregateOutputType = {
     id: number;
     email: number;
-    name: number;
+    password: number;
+    role: number;
+    needPasswordChange: number;
+    gender: number;
+    status: number;
+    isDeleted: number;
+    isVerified: number;
+    createdAt: number;
+    updatedAt: number;
     _all: number;
-};
-export type UserAvgAggregateInputType = {
-    id?: true;
-};
-export type UserSumAggregateInputType = {
-    id?: true;
 };
 export type UserMinAggregateInputType = {
     id?: true;
     email?: true;
-    name?: true;
+    password?: true;
+    role?: true;
+    needPasswordChange?: true;
+    gender?: true;
+    status?: true;
+    isDeleted?: true;
+    isVerified?: true;
+    createdAt?: true;
+    updatedAt?: true;
 };
 export type UserMaxAggregateInputType = {
     id?: true;
     email?: true;
-    name?: true;
+    password?: true;
+    role?: true;
+    needPasswordChange?: true;
+    gender?: true;
+    status?: true;
+    isDeleted?: true;
+    isVerified?: true;
+    createdAt?: true;
+    updatedAt?: true;
 };
 export type UserCountAggregateInputType = {
     id?: true;
     email?: true;
-    name?: true;
+    password?: true;
+    role?: true;
+    needPasswordChange?: true;
+    gender?: true;
+    status?: true;
+    isDeleted?: true;
+    isVerified?: true;
+    createdAt?: true;
+    updatedAt?: true;
     _all?: true;
 };
 export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -94,18 +129,6 @@ export type UserAggregateArgs<ExtArgs extends runtime.Types.Extensions.InternalA
     /**
      * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
      *
-     * Select which fields to average
-    **/
-    _avg?: UserAvgAggregateInputType;
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
-     * Select which fields to sum
-    **/
-    _sum?: UserSumAggregateInputType;
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     *
      * Select which fields to find the minimum value
     **/
     _min?: UserMinAggregateInputType;
@@ -127,18 +150,22 @@ export type UserGroupByArgs<ExtArgs extends runtime.Types.Extensions.InternalArg
     take?: number;
     skip?: number;
     _count?: UserCountAggregateInputType | true;
-    _avg?: UserAvgAggregateInputType;
-    _sum?: UserSumAggregateInputType;
     _min?: UserMinAggregateInputType;
     _max?: UserMaxAggregateInputType;
 };
 export type UserGroupByOutputType = {
-    id: number;
+    id: string;
     email: string;
-    name: string | null;
+    password: string;
+    role: $Enums.UserRole;
+    needPasswordChange: boolean;
+    gender: $Enums.Gender | null;
+    status: $Enums.UserStatus;
+    isDeleted: boolean;
+    isVerified: boolean;
+    createdAt: Date;
+    updatedAt: Date;
     _count: UserCountAggregateOutputType | null;
-    _avg: UserAvgAggregateOutputType | null;
-    _sum: UserSumAggregateOutputType | null;
     _min: UserMinAggregateOutputType | null;
     _max: UserMaxAggregateOutputType | null;
 };
@@ -149,100 +176,222 @@ export type UserWhereInput = {
     AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[];
     OR?: Prisma.UserWhereInput[];
     NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[];
-    id?: Prisma.IntFilter<"User"> | number;
+    id?: Prisma.StringFilter<"User"> | string;
     email?: Prisma.StringFilter<"User"> | string;
-    name?: Prisma.StringNullableFilter<"User"> | string | null;
-    posts?: Prisma.PostListRelationFilter;
+    password?: Prisma.StringFilter<"User"> | string;
+    role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole;
+    needPasswordChange?: Prisma.BoolFilter<"User"> | boolean;
+    gender?: Prisma.EnumGenderNullableFilter<"User"> | $Enums.Gender | null;
+    status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus;
+    isDeleted?: Prisma.BoolFilter<"User"> | boolean;
+    isVerified?: Prisma.BoolFilter<"User"> | boolean;
+    createdAt?: Prisma.DateTimeFilter<"User"> | Date | string;
+    updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string;
+    admin?: Prisma.XOR<Prisma.AdminNullableScalarRelationFilter, Prisma.AdminWhereInput> | null;
+    traveler?: Prisma.XOR<Prisma.TravelerNullableScalarRelationFilter, Prisma.TravelerWhereInput> | null;
 };
 export type UserOrderByWithRelationInput = {
     id?: Prisma.SortOrder;
     email?: Prisma.SortOrder;
-    name?: Prisma.SortOrderInput | Prisma.SortOrder;
-    posts?: Prisma.PostOrderByRelationAggregateInput;
+    password?: Prisma.SortOrder;
+    role?: Prisma.SortOrder;
+    needPasswordChange?: Prisma.SortOrder;
+    gender?: Prisma.SortOrderInput | Prisma.SortOrder;
+    status?: Prisma.SortOrder;
+    isDeleted?: Prisma.SortOrder;
+    isVerified?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
+    admin?: Prisma.AdminOrderByWithRelationInput;
+    traveler?: Prisma.TravelerOrderByWithRelationInput;
 };
 export type UserWhereUniqueInput = Prisma.AtLeast<{
-    id?: number;
+    id?: string;
     email?: string;
     AND?: Prisma.UserWhereInput | Prisma.UserWhereInput[];
     OR?: Prisma.UserWhereInput[];
     NOT?: Prisma.UserWhereInput | Prisma.UserWhereInput[];
-    name?: Prisma.StringNullableFilter<"User"> | string | null;
-    posts?: Prisma.PostListRelationFilter;
+    password?: Prisma.StringFilter<"User"> | string;
+    role?: Prisma.EnumUserRoleFilter<"User"> | $Enums.UserRole;
+    needPasswordChange?: Prisma.BoolFilter<"User"> | boolean;
+    gender?: Prisma.EnumGenderNullableFilter<"User"> | $Enums.Gender | null;
+    status?: Prisma.EnumUserStatusFilter<"User"> | $Enums.UserStatus;
+    isDeleted?: Prisma.BoolFilter<"User"> | boolean;
+    isVerified?: Prisma.BoolFilter<"User"> | boolean;
+    createdAt?: Prisma.DateTimeFilter<"User"> | Date | string;
+    updatedAt?: Prisma.DateTimeFilter<"User"> | Date | string;
+    admin?: Prisma.XOR<Prisma.AdminNullableScalarRelationFilter, Prisma.AdminWhereInput> | null;
+    traveler?: Prisma.XOR<Prisma.TravelerNullableScalarRelationFilter, Prisma.TravelerWhereInput> | null;
 }, "id" | "email">;
 export type UserOrderByWithAggregationInput = {
     id?: Prisma.SortOrder;
     email?: Prisma.SortOrder;
-    name?: Prisma.SortOrderInput | Prisma.SortOrder;
+    password?: Prisma.SortOrder;
+    role?: Prisma.SortOrder;
+    needPasswordChange?: Prisma.SortOrder;
+    gender?: Prisma.SortOrderInput | Prisma.SortOrder;
+    status?: Prisma.SortOrder;
+    isDeleted?: Prisma.SortOrder;
+    isVerified?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
     _count?: Prisma.UserCountOrderByAggregateInput;
-    _avg?: Prisma.UserAvgOrderByAggregateInput;
     _max?: Prisma.UserMaxOrderByAggregateInput;
     _min?: Prisma.UserMinOrderByAggregateInput;
-    _sum?: Prisma.UserSumOrderByAggregateInput;
 };
 export type UserScalarWhereWithAggregatesInput = {
     AND?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[];
     OR?: Prisma.UserScalarWhereWithAggregatesInput[];
     NOT?: Prisma.UserScalarWhereWithAggregatesInput | Prisma.UserScalarWhereWithAggregatesInput[];
-    id?: Prisma.IntWithAggregatesFilter<"User"> | number;
+    id?: Prisma.StringWithAggregatesFilter<"User"> | string;
     email?: Prisma.StringWithAggregatesFilter<"User"> | string;
-    name?: Prisma.StringNullableWithAggregatesFilter<"User"> | string | null;
+    password?: Prisma.StringWithAggregatesFilter<"User"> | string;
+    role?: Prisma.EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole;
+    needPasswordChange?: Prisma.BoolWithAggregatesFilter<"User"> | boolean;
+    gender?: Prisma.EnumGenderNullableWithAggregatesFilter<"User"> | $Enums.Gender | null;
+    status?: Prisma.EnumUserStatusWithAggregatesFilter<"User"> | $Enums.UserStatus;
+    isDeleted?: Prisma.BoolWithAggregatesFilter<"User"> | boolean;
+    isVerified?: Prisma.BoolWithAggregatesFilter<"User"> | boolean;
+    createdAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string;
+    updatedAt?: Prisma.DateTimeWithAggregatesFilter<"User"> | Date | string;
 };
 export type UserCreateInput = {
+    id?: string;
     email: string;
-    name?: string | null;
-    posts?: Prisma.PostCreateNestedManyWithoutAuthorInput;
+    password: string;
+    role?: $Enums.UserRole;
+    needPasswordChange?: boolean;
+    gender?: $Enums.Gender | null;
+    status?: $Enums.UserStatus;
+    isDeleted?: boolean;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    admin?: Prisma.AdminCreateNestedOneWithoutUserInput;
+    traveler?: Prisma.TravelerCreateNestedOneWithoutUserInput;
 };
 export type UserUncheckedCreateInput = {
-    id?: number;
+    id?: string;
     email: string;
-    name?: string | null;
-    posts?: Prisma.PostUncheckedCreateNestedManyWithoutAuthorInput;
+    password: string;
+    role?: $Enums.UserRole;
+    needPasswordChange?: boolean;
+    gender?: $Enums.Gender | null;
+    status?: $Enums.UserStatus;
+    isDeleted?: boolean;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    admin?: Prisma.AdminUncheckedCreateNestedOneWithoutUserInput;
+    traveler?: Prisma.TravelerUncheckedCreateNestedOneWithoutUserInput;
 };
 export type UserUpdateInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.StringFieldUpdateOperationsInput | string;
-    name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    posts?: Prisma.PostUpdateManyWithoutAuthorNestedInput;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole;
+    needPasswordChange?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+    isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    admin?: Prisma.AdminUpdateOneWithoutUserNestedInput;
+    traveler?: Prisma.TravelerUpdateOneWithoutUserNestedInput;
 };
 export type UserUncheckedUpdateInput = {
-    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.StringFieldUpdateOperationsInput | string;
-    name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
-    posts?: Prisma.PostUncheckedUpdateManyWithoutAuthorNestedInput;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole;
+    needPasswordChange?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+    isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    admin?: Prisma.AdminUncheckedUpdateOneWithoutUserNestedInput;
+    traveler?: Prisma.TravelerUncheckedUpdateOneWithoutUserNestedInput;
 };
 export type UserCreateManyInput = {
-    id?: number;
+    id?: string;
     email: string;
-    name?: string | null;
+    password: string;
+    role?: $Enums.UserRole;
+    needPasswordChange?: boolean;
+    gender?: $Enums.Gender | null;
+    status?: $Enums.UserStatus;
+    isDeleted?: boolean;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
 };
 export type UserUpdateManyMutationInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.StringFieldUpdateOperationsInput | string;
-    name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole;
+    needPasswordChange?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+    isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type UserUncheckedUpdateManyInput = {
-    id?: Prisma.IntFieldUpdateOperationsInput | number;
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.StringFieldUpdateOperationsInput | string;
-    name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole;
+    needPasswordChange?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+    isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
 };
 export type UserCountOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     email?: Prisma.SortOrder;
-    name?: Prisma.SortOrder;
-};
-export type UserAvgOrderByAggregateInput = {
-    id?: Prisma.SortOrder;
+    password?: Prisma.SortOrder;
+    role?: Prisma.SortOrder;
+    needPasswordChange?: Prisma.SortOrder;
+    gender?: Prisma.SortOrder;
+    status?: Prisma.SortOrder;
+    isDeleted?: Prisma.SortOrder;
+    isVerified?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
 };
 export type UserMaxOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     email?: Prisma.SortOrder;
-    name?: Prisma.SortOrder;
+    password?: Prisma.SortOrder;
+    role?: Prisma.SortOrder;
+    needPasswordChange?: Prisma.SortOrder;
+    gender?: Prisma.SortOrder;
+    status?: Prisma.SortOrder;
+    isDeleted?: Prisma.SortOrder;
+    isVerified?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
 };
 export type UserMinOrderByAggregateInput = {
     id?: Prisma.SortOrder;
     email?: Prisma.SortOrder;
-    name?: Prisma.SortOrder;
-};
-export type UserSumOrderByAggregateInput = {
-    id?: Prisma.SortOrder;
+    password?: Prisma.SortOrder;
+    role?: Prisma.SortOrder;
+    needPasswordChange?: Prisma.SortOrder;
+    gender?: Prisma.SortOrder;
+    status?: Prisma.SortOrder;
+    isDeleted?: Prisma.SortOrder;
+    isVerified?: Prisma.SortOrder;
+    createdAt?: Prisma.SortOrder;
+    updatedAt?: Prisma.SortOrder;
 };
 export type UserScalarRelationFilter = {
     is?: Prisma.UserWhereInput;
@@ -251,121 +400,262 @@ export type UserScalarRelationFilter = {
 export type StringFieldUpdateOperationsInput = {
     set?: string;
 };
-export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null;
+export type EnumUserRoleFieldUpdateOperationsInput = {
+    set?: $Enums.UserRole;
 };
-export type IntFieldUpdateOperationsInput = {
-    set?: number;
-    increment?: number;
-    decrement?: number;
-    multiply?: number;
-    divide?: number;
+export type BoolFieldUpdateOperationsInput = {
+    set?: boolean;
 };
-export type UserCreateNestedOneWithoutPostsInput = {
-    create?: Prisma.XOR<Prisma.UserCreateWithoutPostsInput, Prisma.UserUncheckedCreateWithoutPostsInput>;
-    connectOrCreate?: Prisma.UserCreateOrConnectWithoutPostsInput;
+export type NullableEnumGenderFieldUpdateOperationsInput = {
+    set?: $Enums.Gender | null;
+};
+export type EnumUserStatusFieldUpdateOperationsInput = {
+    set?: $Enums.UserStatus;
+};
+export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string;
+};
+export type UserCreateNestedOneWithoutAdminInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutAdminInput, Prisma.UserUncheckedCreateWithoutAdminInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutAdminInput;
     connect?: Prisma.UserWhereUniqueInput;
 };
-export type UserUpdateOneRequiredWithoutPostsNestedInput = {
-    create?: Prisma.XOR<Prisma.UserCreateWithoutPostsInput, Prisma.UserUncheckedCreateWithoutPostsInput>;
-    connectOrCreate?: Prisma.UserCreateOrConnectWithoutPostsInput;
-    upsert?: Prisma.UserUpsertWithoutPostsInput;
+export type UserUpdateOneRequiredWithoutAdminNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutAdminInput, Prisma.UserUncheckedCreateWithoutAdminInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutAdminInput;
+    upsert?: Prisma.UserUpsertWithoutAdminInput;
     connect?: Prisma.UserWhereUniqueInput;
-    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutPostsInput, Prisma.UserUpdateWithoutPostsInput>, Prisma.UserUncheckedUpdateWithoutPostsInput>;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutAdminInput, Prisma.UserUpdateWithoutAdminInput>, Prisma.UserUncheckedUpdateWithoutAdminInput>;
 };
-export type UserCreateWithoutPostsInput = {
+export type UserCreateNestedOneWithoutTravelerInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutTravelerInput, Prisma.UserUncheckedCreateWithoutTravelerInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutTravelerInput;
+    connect?: Prisma.UserWhereUniqueInput;
+};
+export type UserUpdateOneRequiredWithoutTravelerNestedInput = {
+    create?: Prisma.XOR<Prisma.UserCreateWithoutTravelerInput, Prisma.UserUncheckedCreateWithoutTravelerInput>;
+    connectOrCreate?: Prisma.UserCreateOrConnectWithoutTravelerInput;
+    upsert?: Prisma.UserUpsertWithoutTravelerInput;
+    connect?: Prisma.UserWhereUniqueInput;
+    update?: Prisma.XOR<Prisma.XOR<Prisma.UserUpdateToOneWithWhereWithoutTravelerInput, Prisma.UserUpdateWithoutTravelerInput>, Prisma.UserUncheckedUpdateWithoutTravelerInput>;
+};
+export type UserCreateWithoutAdminInput = {
+    id?: string;
     email: string;
-    name?: string | null;
+    password: string;
+    role?: $Enums.UserRole;
+    needPasswordChange?: boolean;
+    gender?: $Enums.Gender | null;
+    status?: $Enums.UserStatus;
+    isDeleted?: boolean;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    traveler?: Prisma.TravelerCreateNestedOneWithoutUserInput;
 };
-export type UserUncheckedCreateWithoutPostsInput = {
-    id?: number;
+export type UserUncheckedCreateWithoutAdminInput = {
+    id?: string;
     email: string;
-    name?: string | null;
+    password: string;
+    role?: $Enums.UserRole;
+    needPasswordChange?: boolean;
+    gender?: $Enums.Gender | null;
+    status?: $Enums.UserStatus;
+    isDeleted?: boolean;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    traveler?: Prisma.TravelerUncheckedCreateNestedOneWithoutUserInput;
 };
-export type UserCreateOrConnectWithoutPostsInput = {
+export type UserCreateOrConnectWithoutAdminInput = {
     where: Prisma.UserWhereUniqueInput;
-    create: Prisma.XOR<Prisma.UserCreateWithoutPostsInput, Prisma.UserUncheckedCreateWithoutPostsInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutAdminInput, Prisma.UserUncheckedCreateWithoutAdminInput>;
 };
-export type UserUpsertWithoutPostsInput = {
-    update: Prisma.XOR<Prisma.UserUpdateWithoutPostsInput, Prisma.UserUncheckedUpdateWithoutPostsInput>;
-    create: Prisma.XOR<Prisma.UserCreateWithoutPostsInput, Prisma.UserUncheckedCreateWithoutPostsInput>;
+export type UserUpsertWithoutAdminInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutAdminInput, Prisma.UserUncheckedUpdateWithoutAdminInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutAdminInput, Prisma.UserUncheckedCreateWithoutAdminInput>;
     where?: Prisma.UserWhereInput;
 };
-export type UserUpdateToOneWithWhereWithoutPostsInput = {
+export type UserUpdateToOneWithWhereWithoutAdminInput = {
     where?: Prisma.UserWhereInput;
-    data: Prisma.XOR<Prisma.UserUpdateWithoutPostsInput, Prisma.UserUncheckedUpdateWithoutPostsInput>;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutAdminInput, Prisma.UserUncheckedUpdateWithoutAdminInput>;
 };
-export type UserUpdateWithoutPostsInput = {
+export type UserUpdateWithoutAdminInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.StringFieldUpdateOperationsInput | string;
-    name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole;
+    needPasswordChange?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+    isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    traveler?: Prisma.TravelerUpdateOneWithoutUserNestedInput;
 };
-export type UserUncheckedUpdateWithoutPostsInput = {
-    id?: Prisma.IntFieldUpdateOperationsInput | number;
+export type UserUncheckedUpdateWithoutAdminInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
     email?: Prisma.StringFieldUpdateOperationsInput | string;
-    name?: Prisma.NullableStringFieldUpdateOperationsInput | string | null;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole;
+    needPasswordChange?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+    isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    traveler?: Prisma.TravelerUncheckedUpdateOneWithoutUserNestedInput;
 };
-/**
- * Count Type UserCountOutputType
- */
-export type UserCountOutputType = {
-    posts: number;
+export type UserCreateWithoutTravelerInput = {
+    id?: string;
+    email: string;
+    password: string;
+    role?: $Enums.UserRole;
+    needPasswordChange?: boolean;
+    gender?: $Enums.Gender | null;
+    status?: $Enums.UserStatus;
+    isDeleted?: boolean;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    admin?: Prisma.AdminCreateNestedOneWithoutUserInput;
 };
-export type UserCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    posts?: boolean | UserCountOutputTypeCountPostsArgs;
+export type UserUncheckedCreateWithoutTravelerInput = {
+    id?: string;
+    email: string;
+    password: string;
+    role?: $Enums.UserRole;
+    needPasswordChange?: boolean;
+    gender?: $Enums.Gender | null;
+    status?: $Enums.UserStatus;
+    isDeleted?: boolean;
+    isVerified?: boolean;
+    createdAt?: Date | string;
+    updatedAt?: Date | string;
+    admin?: Prisma.AdminUncheckedCreateNestedOneWithoutUserInput;
 };
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeDefaultArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the UserCountOutputType
-     */
-    select?: Prisma.UserCountOutputTypeSelect<ExtArgs> | null;
+export type UserCreateOrConnectWithoutTravelerInput = {
+    where: Prisma.UserWhereUniqueInput;
+    create: Prisma.XOR<Prisma.UserCreateWithoutTravelerInput, Prisma.UserUncheckedCreateWithoutTravelerInput>;
 };
-/**
- * UserCountOutputType without action
- */
-export type UserCountOutputTypeCountPostsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    where?: Prisma.PostWhereInput;
+export type UserUpsertWithoutTravelerInput = {
+    update: Prisma.XOR<Prisma.UserUpdateWithoutTravelerInput, Prisma.UserUncheckedUpdateWithoutTravelerInput>;
+    create: Prisma.XOR<Prisma.UserCreateWithoutTravelerInput, Prisma.UserUncheckedCreateWithoutTravelerInput>;
+    where?: Prisma.UserWhereInput;
+};
+export type UserUpdateToOneWithWhereWithoutTravelerInput = {
+    where?: Prisma.UserWhereInput;
+    data: Prisma.XOR<Prisma.UserUpdateWithoutTravelerInput, Prisma.UserUncheckedUpdateWithoutTravelerInput>;
+};
+export type UserUpdateWithoutTravelerInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole;
+    needPasswordChange?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+    isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    admin?: Prisma.AdminUpdateOneWithoutUserNestedInput;
+};
+export type UserUncheckedUpdateWithoutTravelerInput = {
+    id?: Prisma.StringFieldUpdateOperationsInput | string;
+    email?: Prisma.StringFieldUpdateOperationsInput | string;
+    password?: Prisma.StringFieldUpdateOperationsInput | string;
+    role?: Prisma.EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole;
+    needPasswordChange?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    gender?: Prisma.NullableEnumGenderFieldUpdateOperationsInput | $Enums.Gender | null;
+    status?: Prisma.EnumUserStatusFieldUpdateOperationsInput | $Enums.UserStatus;
+    isDeleted?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    isVerified?: Prisma.BoolFieldUpdateOperationsInput | boolean;
+    createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string;
+    admin?: Prisma.AdminUncheckedUpdateOneWithoutUserNestedInput;
 };
 export type UserSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     email?: boolean;
-    name?: boolean;
-    posts?: boolean | Prisma.User$postsArgs<ExtArgs>;
-    _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
+    password?: boolean;
+    role?: boolean;
+    needPasswordChange?: boolean;
+    gender?: boolean;
+    status?: boolean;
+    isDeleted?: boolean;
+    isVerified?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
+    admin?: boolean | Prisma.User$adminArgs<ExtArgs>;
+    traveler?: boolean | Prisma.User$travelerArgs<ExtArgs>;
 }, ExtArgs["result"]["user"]>;
 export type UserSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     email?: boolean;
-    name?: boolean;
+    password?: boolean;
+    role?: boolean;
+    needPasswordChange?: boolean;
+    gender?: boolean;
+    status?: boolean;
+    isDeleted?: boolean;
+    isVerified?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
 }, ExtArgs["result"]["user"]>;
 export type UserSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
     id?: boolean;
     email?: boolean;
-    name?: boolean;
+    password?: boolean;
+    role?: boolean;
+    needPasswordChange?: boolean;
+    gender?: boolean;
+    status?: boolean;
+    isDeleted?: boolean;
+    isVerified?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
 }, ExtArgs["result"]["user"]>;
 export type UserSelectScalar = {
     id?: boolean;
     email?: boolean;
-    name?: boolean;
+    password?: boolean;
+    role?: boolean;
+    needPasswordChange?: boolean;
+    gender?: boolean;
+    status?: boolean;
+    isDeleted?: boolean;
+    isVerified?: boolean;
+    createdAt?: boolean;
+    updatedAt?: boolean;
 };
-export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "name", ExtArgs["result"]["user"]>;
+export type UserOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "email" | "password" | "role" | "needPasswordChange" | "gender" | "status" | "isDeleted" | "isVerified" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>;
 export type UserInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
-    posts?: boolean | Prisma.User$postsArgs<ExtArgs>;
-    _count?: boolean | Prisma.UserCountOutputTypeDefaultArgs<ExtArgs>;
+    admin?: boolean | Prisma.User$adminArgs<ExtArgs>;
+    traveler?: boolean | Prisma.User$travelerArgs<ExtArgs>;
 };
 export type UserIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {};
 export type UserIncludeUpdateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {};
 export type $UserPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     name: "User";
     objects: {
-        posts: Prisma.$PostPayload<ExtArgs>[];
+        admin: Prisma.$AdminPayload<ExtArgs> | null;
+        traveler: Prisma.$TravelerPayload<ExtArgs> | null;
     };
     scalars: runtime.Types.Extensions.GetPayloadResult<{
-        id: number;
+        id: string;
         email: string;
-        name: string | null;
+        password: string;
+        role: $Enums.UserRole;
+        needPasswordChange: boolean;
+        gender: $Enums.Gender | null;
+        status: $Enums.UserStatus;
+        isDeleted: boolean;
+        isVerified: boolean;
+        createdAt: Date;
+        updatedAt: Date;
     }, ExtArgs["result"]["user"]>;
     composites: {};
 };
@@ -695,7 +985,8 @@ export interface UserDelegate<ExtArgs extends runtime.Types.Extensions.InternalA
  */
 export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise";
-    posts<T extends Prisma.User$postsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$postsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PostPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>;
+    admin<T extends Prisma.User$adminArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$adminArgs<ExtArgs>>): Prisma.Prisma__AdminClient<runtime.Types.Result.GetResult<Prisma.$AdminPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
+    traveler<T extends Prisma.User$travelerArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.User$travelerArgs<ExtArgs>>): Prisma.Prisma__TravelerClient<runtime.Types.Result.GetResult<Prisma.$TravelerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>;
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -721,9 +1012,17 @@ export interface Prisma__UserClient<T, Null = never, ExtArgs extends runtime.Typ
  * Fields of the User model
  */
 export interface UserFieldRefs {
-    readonly id: Prisma.FieldRef<"User", 'Int'>;
+    readonly id: Prisma.FieldRef<"User", 'String'>;
     readonly email: Prisma.FieldRef<"User", 'String'>;
-    readonly name: Prisma.FieldRef<"User", 'String'>;
+    readonly password: Prisma.FieldRef<"User", 'String'>;
+    readonly role: Prisma.FieldRef<"User", 'UserRole'>;
+    readonly needPasswordChange: Prisma.FieldRef<"User", 'Boolean'>;
+    readonly gender: Prisma.FieldRef<"User", 'Gender'>;
+    readonly status: Prisma.FieldRef<"User", 'UserStatus'>;
+    readonly isDeleted: Prisma.FieldRef<"User", 'Boolean'>;
+    readonly isVerified: Prisma.FieldRef<"User", 'Boolean'>;
+    readonly createdAt: Prisma.FieldRef<"User", 'DateTime'>;
+    readonly updatedAt: Prisma.FieldRef<"User", 'DateTime'>;
 }
 /**
  * User findUnique
@@ -1095,27 +1394,40 @@ export type UserDeleteManyArgs<ExtArgs extends runtime.Types.Extensions.Internal
     limit?: number;
 };
 /**
- * User.posts
+ * User.admin
  */
-export type User$postsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+export type User$adminArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
     /**
-     * Select specific fields to fetch from the Post
+     * Select specific fields to fetch from the Admin
      */
-    select?: Prisma.PostSelect<ExtArgs> | null;
+    select?: Prisma.AdminSelect<ExtArgs> | null;
     /**
-     * Omit specific fields from the Post
+     * Omit specific fields from the Admin
      */
-    omit?: Prisma.PostOmit<ExtArgs> | null;
+    omit?: Prisma.AdminOmit<ExtArgs> | null;
     /**
      * Choose, which related nodes to fetch as well
      */
-    include?: Prisma.PostInclude<ExtArgs> | null;
-    where?: Prisma.PostWhereInput;
-    orderBy?: Prisma.PostOrderByWithRelationInput | Prisma.PostOrderByWithRelationInput[];
-    cursor?: Prisma.PostWhereUniqueInput;
-    take?: number;
-    skip?: number;
-    distinct?: Prisma.PostScalarFieldEnum | Prisma.PostScalarFieldEnum[];
+    include?: Prisma.AdminInclude<ExtArgs> | null;
+    where?: Prisma.AdminWhereInput;
+};
+/**
+ * User.traveler
+ */
+export type User$travelerArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Traveler
+     */
+    select?: Prisma.TravelerSelect<ExtArgs> | null;
+    /**
+     * Omit specific fields from the Traveler
+     */
+    omit?: Prisma.TravelerOmit<ExtArgs> | null;
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: Prisma.TravelerInclude<ExtArgs> | null;
+    where?: Prisma.TravelerWhereInput;
 };
 /**
  * User without action

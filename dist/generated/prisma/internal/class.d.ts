@@ -123,14 +123,69 @@ export interface PrismaClient<in LogOpts extends Prisma.LogLevel = never, in out
         omit: OmitOpts;
     }>;
     /**
-     * `prisma.post`: Exposes CRUD operations for the **Post** model.
+     * `prisma.admin`: Exposes CRUD operations for the **Admin** model.
       * Example usage:
       * ```ts
-      * // Fetch zero or more Posts
-      * const posts = await prisma.post.findMany()
+      * // Fetch zero or more Admins
+      * const admins = await prisma.admin.findMany()
       * ```
       */
-    get post(): Prisma.PostDelegate<ExtArgs, {
+    get admin(): Prisma.AdminDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
+     * `prisma.traveler`: Exposes CRUD operations for the **Traveler** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more Travelers
+      * const travelers = await prisma.traveler.findMany()
+      * ```
+      */
+    get traveler(): Prisma.TravelerDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
+     * `prisma.travelPlan`: Exposes CRUD operations for the **TravelPlan** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more TravelPlans
+      * const travelPlans = await prisma.travelPlan.findMany()
+      * ```
+      */
+    get travelPlan(): Prisma.TravelPlanDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
+     * `prisma.review`: Exposes CRUD operations for the **Review** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more Reviews
+      * const reviews = await prisma.review.findMany()
+      * ```
+      */
+    get review(): Prisma.ReviewDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
+     * `prisma.tripRequest`: Exposes CRUD operations for the **TripRequest** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more TripRequests
+      * const tripRequests = await prisma.tripRequest.findMany()
+      * ```
+      */
+    get tripRequest(): Prisma.TripRequestDelegate<ExtArgs, {
+        omit: OmitOpts;
+    }>;
+    /**
+     * `prisma.payment`: Exposes CRUD operations for the **Payment** model.
+      * Example usage:
+      * ```ts
+      * // Fetch zero or more Payments
+      * const payments = await prisma.payment.findMany()
+      * ```
+      */
+    get payment(): Prisma.PaymentDelegate<ExtArgs, {
         omit: OmitOpts;
     }>;
 }

@@ -69,7 +69,12 @@ export const JsonNull = runtime.JsonNull;
 export const AnyNull = runtime.AnyNull;
 export const ModelName = {
     User: 'User',
-    Post: 'Post'
+    Admin: 'Admin',
+    Traveler: 'Traveler',
+    TravelPlan: 'TravelPlan',
+    Review: 'Review',
+    TripRequest: 'TripRequest',
+    Payment: 'Payment'
 };
 /**
  * Enums
@@ -83,18 +88,93 @@ export const TransactionIsolationLevel = runtime.makeStrictEnum({
 export const UserScalarFieldEnum = {
     id: 'id',
     email: 'email',
-    name: 'name'
+    password: 'password',
+    role: 'role',
+    needPasswordChange: 'needPasswordChange',
+    gender: 'gender',
+    status: 'status',
+    isDeleted: 'isDeleted',
+    isVerified: 'isVerified',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
 };
-export const PostScalarFieldEnum = {
+export const AdminScalarFieldEnum = {
+    id: 'id',
+    name: 'name',
+    email: 'email',
+    contactNumber: 'contactNumber',
+    address: 'address',
+    profileImage: 'profileImage',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+export const TravelerScalarFieldEnum = {
+    id: 'id',
+    name: 'name',
+    email: 'email',
+    contactNumber: 'contactNumber',
+    address: 'address',
+    profileImage: 'profileImage',
+    bio: 'bio',
+    travelInterests: 'travelInterests',
+    visitedCountries: 'visitedCountries',
+    currentLocation: 'currentLocation',
+    averageRating: 'averageRating',
+    isVerifiedTraveler: 'isVerifiedTraveler',
+    subscriptionEndDate: 'subscriptionEndDate',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+export const TravelPlanScalarFieldEnum = {
     id: 'id',
     title: 'title',
-    content: 'content',
-    published: 'published',
-    authorId: 'authorId'
+    description: 'description',
+    destination: 'destination',
+    imageUrl: 'imageUrl',
+    startDate: 'startDate',
+    endDate: 'endDate',
+    budgetRange: 'budgetRange',
+    travelType: 'travelType',
+    visibility: 'visibility',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    travelerId: 'travelerId'
+};
+export const ReviewScalarFieldEnum = {
+    id: 'id',
+    rating: 'rating',
+    comment: 'comment',
+    travelerId: 'travelerId',
+    travelPlanId: 'travelPlanId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+export const TripRequestScalarFieldEnum = {
+    id: 'id',
+    travelPlanId: 'travelPlanId',
+    travelerId: 'travelerId',
+    status: 'status',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+};
+export const PaymentScalarFieldEnum = {
+    id: 'id',
+    amount: 'amount',
+    status: 'status',
+    subscription: 'subscription',
+    transactionId: 'transactionId',
+    paymentGatewayData: 'paymentGatewayData',
+    travelerId: 'travelerId',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
 };
 export const SortOrder = {
     asc: 'asc',
     desc: 'desc'
+};
+export const NullableJsonNullValueInput = {
+    DbNull: DbNull,
+    JsonNull: JsonNull
 };
 export const QueryMode = {
     default: 'default',
@@ -103,6 +183,11 @@ export const QueryMode = {
 export const NullsOrder = {
     first: 'first',
     last: 'last'
+};
+export const JsonNullValueFilter = {
+    DbNull: DbNull,
+    JsonNull: JsonNull,
+    AnyNull: AnyNull
 };
 export const defineExtension = runtime.Extensions.defineExtension;
 //# sourceMappingURL=prismaNamespace.js.map
