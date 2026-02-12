@@ -1,4 +1,4 @@
-import express, { type Request, type Response } from 'express';
+import express, { type Application, type Request, type Response } from 'express';
 import config from './config/index.js';
 import cors from "cors";
 import cookieParser from "cookie-parser";
@@ -7,7 +7,7 @@ import notFound from './middlewares/notFound.js';
 import routes from './routes/routes.js';
 import { PaymentController } from './modules/payment/payment.controller.js';
 
-const app = express();
+const app: Application = express();
 
 app.post(
   "/webhook",
